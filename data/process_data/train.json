@@ -1,4 +1,11 @@
-[
+import os
+import json
+
+# 1. డైరెక్టరీలను తయారు చేయడం
+os.makedirs("/content/domain-llm-finetuning/data/processed", exist_ok=True)
+
+# 2. మీ DevOps ట్రైనింగ్ డేటాసెట్
+devops_dataset = [
   {
     "messages": [
       {
@@ -48,3 +55,10 @@
     ]
   }
 ]
+
+# 3. Hugging Face Datasets కి సరిపోయే JSON ఫార్మాట్‌లో రాయడం
+file_path = "/content/domain-llm-finetuning/data/processed/train.json"
+with open(file_path, "w", encoding="utf-8") as f:
+    json.dump(devops_dataset, f, indent=2)
+
+print(f"Dataset successfully created at: {file_path}")
