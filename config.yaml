@@ -1,0 +1,17 @@
+model_name: "Qwen/Qwen2.5-3B-Instruct"  # లేదా "meta-llama/Llama-3.2-3B-Instruct"
+dataset_path: "data/processed/train.json"
+output_dir: "models/adapter"
+
+lora:
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+training:
+  batch_size: 1
+  gradient_accumulation_steps: 4
+  learning_rate: 0.0002
+  num_epochs: 3
+  logging_steps: 5

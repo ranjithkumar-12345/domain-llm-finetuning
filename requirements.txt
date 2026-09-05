@@ -1,0 +1,12 @@
+torch
+transformers
+peft
+trl
+bitsandbytes
+accelerate
+datasets
+pyyaml
+evaluate
+rouge-score
+fastapi
+uvicorn
