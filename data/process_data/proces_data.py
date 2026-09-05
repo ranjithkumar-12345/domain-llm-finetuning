@@ -1,7 +1,7 @@
 import os
 import json
 
-os.makedirs("/content/domain-llm-finetuning/data/processed", exist_ok=True)
+os.makedirs("/content/domain-llm-finetuning/data/process_data", exist_ok=True)
 
 devops_dataset = [
     {
@@ -54,7 +54,7 @@ devops_dataset = [
     }
 ]
 
-file_path = "/content/domain-llm-finetuning/data/processed/train.json"
+file_path = "/content/domain-llm-finetuning/data/process_data/process_data.py"
 
 with open(file_path, "w", encoding="utf-8") as f:
     json.dump(devops_dataset, f, indent=2)
