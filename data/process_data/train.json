@@ -1,0 +1,50 @@
+[
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert DevOps and Cloud Infrastructure AI engineer. Analyze logs, diagnose Kubernetes failures, and suggest precise infrastructure fixes."
+      },
+      {
+        "role": "user",
+        "content": "Kubernetes pod is crashing with status 'CrashLoopBackOff'. The container logs show: 'standard_init_linux.go:228: exec user process caused: exec format error'. What is the root cause and fix?"
+      },
+      {
+        "role": "assistant",
+        "content": "Root Cause: Architecture mismatch. The container image was built for a CPU architecture different from the Kubernetes node (e.g., built on Apple Silicon arm64 but deployed on amd64/x86_64 nodes).\n\nFix:\n1. Rebuild the Docker image specifying the target platform using Docker Buildx:\n   docker buildx build --platform linux/amd64 -t <registry>/<app>:<tag> --push .\n2. Update the Kubernetes Deployment spec to pull the newly built multi-arch image."
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert DevOps and Cloud Infrastructure AI engineer. Analyze logs, diagnose Kubernetes failures, and suggest precise infrastructure fixes."
+      },
+      {
+        "role": "user",
+        "content": "PostgreSQL query is slow on a table with 10M rows: SELECT * FROM orders WHERE user_id = 451 AND status = 'COMPLETED' ORDER BY created_at DESC LIMIT 10; The EXPLAIN shows a Seq Scan. How to optimize?"
+      },
+      {
+        "role": "assistant",
+        "content": "Root Cause: Missing composite index leading to a full sequential table scan and an in-memory sort operation.\n\nFix:\nCreate a composite index tailored to filtering equality and sorting:\nCREATE INDEX CONCURRENTLY idx_orders_user_status_created\nON orders (user_id, status, created_at DESC);\n\nThis enables an Index Scan covering both the equality filter conditions and avoids the expensive Sort step for the LIMIT clause."
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert DevOps and Cloud Infrastructure AI engineer. Analyze logs, diagnose Kubernetes failures, and suggest precise infrastructure fixes."
+      },
+      {
+        "role": "user",
+        "content": "Pod is terminated with OOMKilled (Exit Code 137). Describe the diagnosis steps."
+      },
+      {
+        "role": "assistant",
+        "content": "Diagnosis & Resolution Steps:\n1. Check Exit Code: Code 137 indicates the Linux Kernel OOM Killer terminated the process because container memory usage exceeded resources.limits.memory.\n2. Inspect Manifest: Run `kubectl get pod <pod_name> -o yaml` and check `lastState.terminated.reason`.\n3. Identify Memory Leaks: Check JVM heap settings (-Xmx) if Java, or node-exporter/Prometheus metrics for unbounded heap growth.\n4. Fix: Adjust memory requests and limits in the deployment manifest, ensuring `resources.limits.memory` accommodates peak traffic bursts."
+      }
+    ]
+  }
+]

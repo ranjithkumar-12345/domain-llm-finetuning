@@ -54,7 +54,7 @@ devops_dataset = [
     }
 ]
 
-file_path = "/content/domain-llm-finetuning/data/process_data/process_data.py"
+file_path = "/content/domain-llm-finetuning/data/process_data/train.json"
 
 with open(file_path, "w", encoding="utf-8") as f:
     json.dump(devops_dataset, f, indent=2)
